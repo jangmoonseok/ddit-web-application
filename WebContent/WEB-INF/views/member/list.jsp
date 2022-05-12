@@ -1,3 +1,6 @@
+<%@page import="com.jsp.command.Criteria"%>
+<%@page import="com.jsp.command.PageMaker"%>
+<%@page import="java.util.Map"%>
 <%@page import="com.jsp.dto.MemberVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,6 +11,15 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
+<%
+	Map<String, Object> dataMap = (Map<String, Object>)request.getAttribute("dataMap");
+	List<MemberVO> memberList = (List<MemberVO>)dataMap.get("memberList");
+	PageMaker pageMaker = (PageMaker)dataMap.get("pageMaker");
+	Criteria cri = pageMaker.getCri();
+	int startPage = pageMaker.getStartPage();
+	int endPage = pageMaker.getEndPage();
+	
+%>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -99,7 +111,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		                	<th>등록날짜</th> <!-- yyyy-MM-dd  -->
 		               	</tr>
 		     		<%
-		     			List<MemberVO> memberList = (List<MemberVO>)request.getAttribute("memberList");
 		     			if(memberList != null){
 		     				for(MemberVO member : memberList){		     					
 			     				pageContext.setAttribute("member", member);
@@ -131,13 +142,69 @@ scratch. This page gets rid of all links and provides the needed markup only.
     		</div> <!-- card-body -->
     		<div class="card-footer">
     			<!-- pagination -->
-    		
+    			<nav aria-label="Navigation">
+					<ul class="pagination justify-content-center m-0">
+						<li class="page-item">
+							<a class="page-link" href="javascript:list_go(1)">
+								<i class="fas fa-angle-double-left"></i>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="">
+								<i class="fas fa-angle-left"></i>
+							</a>						
+						</li>
+						<% 
+							for(int i = startPage; i <= endPage; i++){
+								pageContext.setAttribute("page", i);
+						%>
+						<li class="page-item <%= (i == cri.getPage()) ? "active" : "" %>">
+							<a class="page-link" href="javascript:list_go(<%= i%>)">
+								${page }
+							</a>
+						</li>
+						<%			
+							}
+						%>
+						<li class="page-item">
+							<a class="page-link" href="">
+								<i class="fas fa-angle-right"></i>
+							</a>						
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="">
+								<i class="fas fa-angle-double-right"></i>
+							</a>						
+						</li>
+					</ul>
+				</nav>
     		</div>
 	     </div>
    	</section>
   </div>
   
+  <form id="jobForm">
+  	<input type="hidden" name="page" value=""/>
+  	<input type="hidden" name="perPageNum" value=""/>
+  	<input type="hidden" name="searchType" value=""/>
+  	<input type="hidden" name="keyword" value=""/>
+  </form>
+  
   <script>
+	  function list_go(page,url){
+			//alert(page);
+			if(!url) url="list";
+			
+			var jobForm=$('#jobForm');
+			jobForm.find("[name='page']").val(page);
+			jobForm.find("[name='perPageNum']").val($('select[name="perPageNum"]').val());
+			
+			jobForm.attr({
+				action:url,
+				method:'get'
+			}).submit();
+			
+	}
   </script>
  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

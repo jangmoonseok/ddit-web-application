@@ -2,6 +2,7 @@ package com.jsp.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,7 @@ public class MemberListServlet extends HttpServlet {
 		String pageParam = request.getParameter("page");
 		String perPageNumParam = request.getParameter("perPageNum");
 		
-		Criteria criteria = new Criteria();
+		Criteria cri = new Criteria();
 		
 		boolean criFlag = true;
 		
@@ -38,8 +39,8 @@ public class MemberListServlet extends HttpServlet {
 						  && !perPageNumParam.isEmpty();
 		if(criFlag) {
 			try {
-				criteria.setPage(Integer.parseInt(pageParam));
-				criteria.setPerPageNum(Integer.parseInt(perPageNumParam));
+				cri.setPage(Integer.parseInt(pageParam));
+				cri.setPerPageNum(Integer.parseInt(perPageNumParam));
 			}catch(Exception e) {
 				response.sendError(response.SC_BAD_REQUEST);
 				return;
@@ -47,8 +48,10 @@ public class MemberListServlet extends HttpServlet {
 		}
 		
 		try {
-			List<MemberVO> memberList = service.getMemberList(criteria);
-			request.setAttribute("memberList", memberList);
+			Map<String, Object> dataMap = service.getMemberListForPage(cri);
+//			request.setAttribute("memberList", dataMap.get("memberList"));
+//			request.setAttribute("pageMaker", dataMap.get("pageMaker"));
+			request.setAttribute("dataMap", dataMap);
 		} catch (Exception e) {
 			url = "/WEB-INF/views/error/500.jsp";
 		}
@@ -62,3 +65,4 @@ public class MemberListServlet extends HttpServlet {
 	}
 
 }
+

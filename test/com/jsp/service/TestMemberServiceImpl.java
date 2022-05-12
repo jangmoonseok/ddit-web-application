@@ -14,7 +14,7 @@ public class TestMemberServiceImpl {
 	
 	@Test
 	public void getMemberListTest() throws Exception {
-		List<MemberVO> memberList = service.getMembetList();
+		List<MemberVO> memberList = service.getMemberList();
 		
 		Assert.assertEquals(7, memberList.size());
 	}

@@ -36,4 +36,11 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	}
 
+	@Override
+	public int selectMemberListCount(SqlSession session) throws Exception {
+		int totalCount = session.selectOne("Member-Mapper.selectMemberListCount");
+		
+		return totalCount;
+	}
+
 }
