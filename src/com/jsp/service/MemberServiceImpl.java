@@ -32,6 +32,8 @@ public class MemberServiceImpl implements MemberService {
 			session.rollback();
 			e.printStackTrace();
 			throw e;
+		}finally {
+			if(session != null) session.close();
 		}
 		
 		return memberList;
@@ -50,6 +52,8 @@ public class MemberServiceImpl implements MemberService {
 			session.rollback();
 			e.printStackTrace();
 			throw e;
+		}finally {
+			if(session != null) session.close();
 		}
 		
 		return memberList;
@@ -78,6 +82,8 @@ public class MemberServiceImpl implements MemberService {
 			session.rollback();
 			e.printStackTrace();
 			throw e;
+		}finally {
+			if(session != null) session.close();
 		}
 		
 		return dataMap;

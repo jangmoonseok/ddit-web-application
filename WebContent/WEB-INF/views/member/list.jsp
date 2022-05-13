@@ -69,27 +69,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
    					 	<!-- search bar -->
    					 	<!-- sort num -->
 					  	<select class="form-control col-md-3" name="perPageNum" 
-					  			id="perPageNum" onchange="">					  		  		
-					  		<option value="10" >정렬개수</option>
-					  		<option value="2" >2개씩</option>
-					  		<option value="3">3개씩</option>
-					  		<option value="5" >5개씩</option>
+					  			id="perPageNum" onchange="list_go(1)">					  		  		
+					  		<option value="10" <%= pageMaker.getCri().getPerPageNum() == 10 ? "selected" : "" %>>정렬개수</option>
+					  		<option value="2" <%= pageMaker.getCri().getPerPageNum() == 2 ? "selected" : "" %>>2개씩</option>
+					  		<option value="3" <%= pageMaker.getCri().getPerPageNum() == 3 ? "selected" : "" %>>3개씩</option>
+					  		<option value="5" <%= pageMaker.getCri().getPerPageNum() == 5 ? "selected" : "" %>>5개씩</option>
 					  	</select>
 					  	
 					  	<!-- search bar -->
 					 	<select class="form-control col-md-3" name="searchType" id="searchType">
 					 		<option value=""  >검색구분</option>
-							<option value="i" >아이디</option>
-							<option value="n" >이 름</option>
-							<option value="p" >전화번호</option>
-							<option value="e" >이메일</option>				 									
+							<option value="i" ${param.searchType == 'i' ? "selected" : ""}>아이디</option>
+							<option value="n" ${param.searchType == 'n' ? "selected" : ""}>이 름</option>
+							<option value="p" ${param.searchType == 'p' ? "selected" : ""}>전화번호</option>
+							<option value="e" ${param.searchType == 'e' ? "selected" : ""}>이메일</option>				 									
 						</select>
 						<!-- keyword -->
    					 	<input  class="form-control" type="text" name="keyword" 
-										placeholder="검색어를 입력하세요." value=""/>
+										placeholder="검색어를 입력하세요." value="${param.keyword }"/>
 						<span class="input-group-append">
 							<button class="btn btn-primary" type="button" 
-									id="searchBtn" data-card-widget="search" onclick="">
+									id="searchBtn" data-card-widget="search" onclick="list_go(1);">
 								<i class="fa fa-fw fa-search"></i>
 							</button>
 						</span>
@@ -97,7 +97,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
    					 </div>
    				</div>   			
    			</div>
-   			<div class="card-body" style="text-align:center;height:76vh;">
+   			<div class="card-body" style="text-align:center;">
     		  <div class="row">
 	             <div class="col-sm-12">	
 		    		<table class="table table-bordered">
@@ -198,6 +198,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			var jobForm=$('#jobForm');
 			jobForm.find("[name='page']").val(page);
 			jobForm.find("[name='perPageNum']").val($('select[name="perPageNum"]').val());
+			jobForm.find("[name='searchType']").val($('select[name="searchType"]').val());
+			jobForm.find("[name='keyword']").val($('div.input-group>input[name="keyword"]').val())
+			
 			
 			jobForm.attr({
 				action:url,

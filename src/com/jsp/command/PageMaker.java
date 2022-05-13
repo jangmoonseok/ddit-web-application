@@ -13,7 +13,7 @@ public class PageMaker {
 	
 	Criteria cri = new Criteria();
 	
-	private void calcDate() {
+	private void calcData() {
 		endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
 		
 		startPage = (endPage - displayPageNum) + 1;
@@ -39,7 +39,7 @@ public class PageMaker {
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 		
-		calcDate();
+		calcData();
 	}
 
 	public int getStartPage() {
