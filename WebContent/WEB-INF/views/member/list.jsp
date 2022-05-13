@@ -5,21 +5,29 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<%
+<%-- <%
 	Map<String, Object> dataMap = (Map<String, Object>)request.getAttribute("dataMap");
 	List<MemberVO> memberList = (List<MemberVO>)dataMap.get("memberList");
 	PageMaker pageMaker = (PageMaker)dataMap.get("pageMaker");
 	Criteria cri = pageMaker.getCri();
 	int startPage = pageMaker.getStartPage();
 	int endPage = pageMaker.getEndPage();
-	
-%>
+%> --%>
+<c:set var="dataMap" value="${dataMap }"/>
+<c:set var="memberList" value="${dataMap.get('memberList') }"/>
+<c:set var="pageMaker" value="${dataMap.get('pageMaker') }"/>
+<c:set var="cri" value="${pageMaker.cri }"/>
+<c:set var="startPage" value="${pageMaker.startPage }"/>
+<c:set var="endPage" value="${pageMaker.endPage }"/>
+<%-- ${dataMap }<br>
+${memberList }<br>
+${pageMaker }<br>
+${cri }<br>
+${startPage }<br>
+${endPage }<br> --%>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -70,10 +78,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
    					 	<!-- sort num -->
 					  	<select class="form-control col-md-3" name="perPageNum" 
 					  			id="perPageNum" onchange="list_go(1)">					  		  		
-					  		<option value="10" <%= pageMaker.getCri().getPerPageNum() == 10 ? "selected" : "" %>>정렬개수</option>
-					  		<option value="2" <%= pageMaker.getCri().getPerPageNum() == 2 ? "selected" : "" %>>2개씩</option>
-					  		<option value="3" <%= pageMaker.getCri().getPerPageNum() == 3 ? "selected" : "" %>>3개씩</option>
-					  		<option value="5" <%= pageMaker.getCri().getPerPageNum() == 5 ? "selected" : "" %>>5개씩</option>
+					  		<option value="10" ${cri.perPageNum eq 10 ? 'selected' : '' }>정렬개수</option>
+					  		<option value="2" ${cri.perPageNum eq 2 ? 'selected' : '' }>2개씩</option>
+					  		<option value="3" ${cri.perPageNum eq 3 ? 'selected' : '' }>3개씩</option>
+					  		<option value="5" ${cri.perPageNum eq 5 ? 'selected' : '' }>5개씩</option>
 					  	</select>
 					  	
 					  	<!-- search bar -->
@@ -110,7 +118,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		                	<th>전화번호</th>
 		                	<th>등록날짜</th> <!-- yyyy-MM-dd  -->
 		               	</tr>
-		     		<%
+		               	<c:forEach items="${memberList }" var="member">
+		               		<tr onclick="" style="cursor:pointer;">
+			     				<td>사진</td>
+			     				<td>${member.id }</td>
+			     				<td>${member.pwd }</td>
+			     				<td>${member.name }</td>
+			     				<td>${member.email }</td>
+			     				<td>${member.phone.replace('-','') }</td>
+			     				<td>${member.regdate }</td>
+		     				</tr>
+		               	</c:forEach>
+		               	<c:if test="${empty memberList }">
+			               	<tr>
+			     				<td colspan="7" class="text-center">해당 내용이 존재하지 않습니다.</td>
+			     			</tr>
+		               	</c:if> 
+		     		<%-- <%
 		     			if(memberList != null){
 		     				for(MemberVO member : memberList){		     					
 			     				pageContext.setAttribute("member", member);
@@ -133,7 +157,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		     			</tr>
 		     		<%
 		     			}
-		     		%>
+		     		%> --%>
 		     		
 	
 		            </table>
@@ -154,7 +178,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<i class="fas fa-angle-left"></i>
 							</a>						
 						</li>
-						<% 
+						<c:forEach begin="${startPage }" end="${endPage }" var="page">
+							<li class="page-item ${page eq cri.page ? 'active' : ''}">
+								<a class="page-link" href="javascript:list_go(${page })">
+									${page }
+								</a>
+							</li>
+						</c:forEach>
+						<%-- <% 
 							for(int i = startPage; i <= endPage; i++){
 								pageContext.setAttribute("page", i);
 						%>
@@ -165,7 +196,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						</li>
 						<%			
 							}
-						%>
+						%> --%>
 						<li class="page-item">
 							<a class="page-link" href="">
 								<i class="fas fa-angle-right"></i>
