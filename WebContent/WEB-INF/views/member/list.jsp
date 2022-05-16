@@ -6,28 +6,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
-<%-- <%
-	Map<String, Object> dataMap = (Map<String, Object>)request.getAttribute("dataMap");
-	List<MemberVO> memberList = (List<MemberVO>)dataMap.get("memberList");
-	PageMaker pageMaker = (PageMaker)dataMap.get("pageMaker");
-	Criteria cri = pageMaker.getCri();
-	int startPage = pageMaker.getStartPage();
-	int endPage = pageMaker.getEndPage();
-%> --%>
-<c:set var="dataMap" value="${dataMap }"/>
-<c:set var="memberList" value="${dataMap.get('memberList') }"/>
-<c:set var="pageMaker" value="${dataMap.get('pageMaker') }"/>
+<c:set var="memberList" value="${dataMap.memberList }"/>
+<c:set var="pageMaker" value="${dataMap.pageMaker }"/>
 <c:set var="cri" value="${pageMaker.cri }"/>
 <c:set var="startPage" value="${pageMaker.startPage }"/>
 <c:set var="endPage" value="${pageMaker.endPage }"/>
-<%-- ${dataMap }<br>
-${memberList }<br>
-${pageMaker }<br>
-${cri }<br>
-${startPage }<br>
-${endPage }<br> --%>
+
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -118,48 +105,26 @@ ${endPage }<br> --%>
 		                	<th>전화번호</th>
 		                	<th>등록날짜</th> <!-- yyyy-MM-dd  -->
 		               	</tr>
-		               	<c:forEach items="${memberList }" var="member">
-		               		<tr onclick="" style="cursor:pointer;">
-			     				<td>사진</td>
-			     				<td>${member.id }</td>
-			     				<td>${member.pwd }</td>
-			     				<td>${member.name }</td>
-			     				<td>${member.email }</td>
-			     				<td>${member.phone.replace('-','') }</td>
-			     				<td>${member.regdate }</td>
-		     				</tr>
-		               	</c:forEach>
+		               	<c:if test="${!empty memberList }">
+			               	<c:forEach items="${memberList }" var="member">
+			               		<tr onclick="" style="cursor:pointer;">
+				     				<td>사진</td>
+				     				<td>${member.id }</td>
+				     				<td>${member.pwd }</td>
+				     				<td>${member.name }</td>
+				     				<td>${member.email }</td>
+				     				<td>${member.phone.replace('-','') }</td>
+				     				<td>
+				     					<fmt:formatDate value="${member.regdate }" pattern="yyyy-MM-dd"/>
+				     				</td>
+			     				</tr>
+			               	</c:forEach>
+						</c:if>
 		               	<c:if test="${empty memberList }">
 			               	<tr>
 			     				<td colspan="7" class="text-center">해당 내용이 존재하지 않습니다.</td>
 			     			</tr>
 		               	</c:if> 
-		     		<%-- <%
-		     			if(memberList != null){
-		     				for(MemberVO member : memberList){		     					
-			     				pageContext.setAttribute("member", member);
-		     		%>
-		     			<tr onclick="" style="cursor:pointer;">
-		     				<td>사진</td>
-		     				<td>${member.id }</td>
-		     				<td>${member.pwd }</td>
-		     				<td>${member.name }</td>
-		     				<td>${member.email }</td>
-		     				<td>${member.phone.replace('-','') }</td>
-		     				<td>${member.regdate }</td>
-		     			</tr>
-		     		<%		
-		     				}
-		     			}else{
-		     		%>
-		     			<tr>
-		     				<td colspan="7" class="text-center">해당 내용이 존재하지 않습니다.</td>
-		     			</tr>
-		     		<%
-		     			}
-		     		%> --%>
-		     		
-	
 		            </table>
     		     </div> <!-- col-sm-12 -->
     	       </div> <!-- row -->
@@ -185,18 +150,6 @@ ${endPage }<br> --%>
 								</a>
 							</li>
 						</c:forEach>
-						<%-- <% 
-							for(int i = startPage; i <= endPage; i++){
-								pageContext.setAttribute("page", i);
-						%>
-						<li class="page-item <%= (i == cri.getPage()) ? "active" : "" %>">
-							<a class="page-link" href="javascript:list_go(<%= i%>)">
-								${page }
-							</a>
-						</li>
-						<%			
-							}
-						%> --%>
 						<li class="page-item">
 							<a class="page-link" href="">
 								<i class="fas fa-angle-right"></i>
