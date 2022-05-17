@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/dist/css/adminlte.min.css">
+  
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -58,7 +59,7 @@
    	<section class="content">
    		<div class="card">
    			<div class="card-header with-border">
-   				<button type="button" class="btn btn-primary" onclick="" >회원등록</button>
+   				<button type="button" class="btn btn-primary" onclick="OpenWindow('regist', '회원등록', 800,800)" >회원등록</button>
    				<div id="keyword" class="card-tools" style="width:550px;">
    					 <div class="input-group row">
    					 	<!-- search bar -->
@@ -189,9 +190,10 @@
 			jobForm.attr({
 				action:url,
 				method:'get'
-			}).submit();
-			
-	}
+			}).submit();		
+	 }
+	 
+	  
   </script>
  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -223,5 +225,7 @@
 <script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<%=request.getContextPath() %>/resources/bootstrap/dist/js/adminlte.min.js"></script>
+<!-- common js -->
+<script src="<%=request.getContextPath() %>/resources/js/common.js"></script>
 </body>
 </html>

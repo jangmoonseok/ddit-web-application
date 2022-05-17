@@ -89,4 +89,60 @@ public class MemberServiceImpl implements MemberService {
 		return dataMap;
 	}
 
+	@Override
+	public MemberVO getMember(String id) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			// mybatis는 같은 session을 사용했을때 sqlException이 터지면 mybatis가 알아서 rollback해준다. 
+			// 그러므로 catch로 잡아서 수동으로 rollback할 필요가 없다.(자동 트랜잭션)
+			MemberVO member = memberDAO.selectMemberById(session, id);
+			return member;
+		}finally {
+			if(session != null) session.close();
+		}
+	}
+
+	@Override
+	public void regist(MemberVO member) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			memberDAO.insertMember(session, member);
+		}finally {
+			if(session != null) session.close();
+		}
+	}
+
+	@Override
+	public void modify(MemberVO member) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			memberDAO.updateMember(session, member);
+		}finally {
+			if(session != null) session.close();
+		}
+		
+	}
+
+	@Override
+	public void remove(String id) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			memberDAO.deleteMember(session, id);
+		}finally {
+			if(session != null) session.close();
+		}
+		
+	}
+
+	@Override
+	public void enabled(String id, int enabled) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			memberDAO.enabledMember(session, id, enabled);
+		}finally {
+			if(session != null) session.close();
+		}
+		
+	}
+
 }
