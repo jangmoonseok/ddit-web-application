@@ -187,6 +187,39 @@ function picture_go(){
       picture.value="";
       return;
    };
+   
+   //업로드 확인변수 초기화(사진변경)
+   form.find('[name="checkUpload"]').val(0);
+   document.getElementById('inputFileName').value = picture.files[0].name;
+   
+   if(picture.files && picture.files[0]){
+	   var reader = new FileReader();
+	   
+	   reader.onload = function(e){
+		   $('div#pictureView').css({
+			   	'background-image':'url(' + e.target.result + ')',
+		   		'background-position':'center',
+		   		'background-size':'cover',
+		   		'background-repeat':'no-repeat'
+		   });
+	   }
+	   
+	   reader.readAsDataURL(picture.files[0]);
+   }
+}
+
+function upload_go(){
+	// 유효성 검사
+	if(!$('input[name="pictureFile"]').val()){
+		alert("사진을 선택하세요.");
+		$('input[name="pictureFile"]').click();
+		return;
+	}
+	
+	if($('input[name="checkUpload"]').val() == 1){
+		alert("이미 업로드 된 사진입니다.");
+		return;
+	}
 }
 </script>
 <!-- jQuery -->
