@@ -2,6 +2,7 @@ package com.jsp.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -77,14 +78,45 @@ public class MultipartHttpServletRequestParser {
 	}
 	
 	public FileItem getFileItem(String paramName) {
-		return null;
+		List<FileItem> itemList = paramFile.get(paramName);
+		
+		FileItem result = null;
+		
+		if(itemList != null) result =  itemList.get(0);
+		
+		return result;
 	}
 	
 	public FileItem[] getFileItems(String paramName) {
-		return null;
+		List<FileItem> itemList = paramFile.get(paramName);
+		
+		FileItem[] files = null;
+		
+		if(itemList != null) {
+			files = new FileItem[itemList.size()];
+			itemList.toArray(files);
+		}
+		
+		return files;
 	}
 	
 	public Enumeration<String> getParameterNames(){
-		return null;
+		List<String> paramNames = new ArrayList<String>();
+		
+		if(paramString.size() > 0) {
+			for(String paramName : paramString.keySet()) {
+				paramNames.add(paramName);
+			}
+		}
+		
+		if(paramFile.size() > 0) {
+			for(String paramName : paramFile.keySet()) {
+				paramNames.add(paramName);
+			}
+		}
+		
+		Enumeration<String> result = Collections.enumeration(paramNames);
+		
+		return result;
 	}
 }

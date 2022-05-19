@@ -220,6 +220,22 @@ function upload_go(){
 		alert("이미 업로드 된 사진입니다.");
 		return;
 	}
+	
+	var formData = new FormData($('form[role="imageForm"]')[0]);
+	
+	$.ajax({
+		url:'picture',
+		data:formData,
+		type:'post',
+		processData:false,
+		contentType:false,
+		success:function(data){
+			
+		},
+		error:function(error){
+			
+		}
+	})
 }
 </script>
 <!-- jQuery -->
