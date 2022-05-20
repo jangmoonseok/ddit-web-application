@@ -54,7 +54,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<!-- form start -->
 			<div class="card">				
 				<div class="register-card-body">
-					<form role="form" class="form-horizontal" action="regist.do" method="post">						
+					<form role="form" class="form-horizontal" action="regist" method="post">						
 						<input type="hidden" name="picture" />
 						<div class="input-group mb-3">
 							<div class="mailbox-attachments clearfix" style="text-align: center;">
@@ -230,12 +230,78 @@ function upload_go(){
 		processData:false,
 		contentType:false,
 		success:function(data){
-			
+			//업로드 확인변수 세팅
+			$('input[name="checkUpload"]').val(1);
+			//저장된 파일명 저장
+			$('input#oldFile').val(data); // 변경시 삭제될 파일명
+			$('form[role="form"] input[name="picture"]').val(data);
+			alert("사진이 업로드 되었습니다.");
 		},
 		error:function(error){
-			
+			alert("현재 사진 업로드가 불가합니다.\n 관리자에게 연락 바랍니다.")
 		}
-	})
+	});
+}
+
+var checkedID = "";
+function idCheck_go(){
+	var input_ID = $('input[name="id"]');
+	
+	if(!input_ID.val()){
+		alert("아이디를 입력하시오");
+		input_ID.focus();
+		return;
+	}
+	
+	$.ajax({
+		url:"idCheck?id=" + input_ID.val().trim(),
+		method:"get",
+		success:function(result){
+			if(result.toUpperCase() == "DUPLICATED"){
+				alert("중복된 아이디 입니다.");
+				$('input[name="id"]').focus();
+			}else{
+				alert("사용가능한 아이디 입니다.");
+				checkedID=input_ID.val().trim();
+				$('input[name="id"]').val(input_ID.val().trim());
+			}
+		},
+		error:function(error){
+			alert("시스템 장애로 가입이 불가합니다.")
+		}
+	});
+}
+
+function regist_go(){
+	var uploadCheck = $('input[name="checkUpload"]').val();
+	
+	if(uploadCheck == "0"){
+		alert("사진 업로드는 필수입니다.");
+		return;
+	}
+	
+	if(!$('input[name="id"]').val()){
+		alert("아이디 입력은 필수입니다.");
+		return;
+	}
+	
+	if($('input[name="id"]').val() != checkedID){
+		alert("아이디 중복체크를 해주세요.");
+		return;
+	}
+	
+	if(!$('input[name="pwd"]').val()){
+		alert("패스워드는 필수입니다.");
+		return;
+	}
+	
+	if(!$('input[name="name"]').val()){
+		alert("이름은 필수입니다.");
+		return;
+	}
+	
+	var form = $('form[role="form"]');
+	form.submit();
 }
 </script>
 <!-- jQuery -->
