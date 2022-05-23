@@ -6,12 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 
 public class HttpRequestParameterAdapter {
 
-	public static Object execute(HttpServletRequest request, Class<?> className) throws Exception {
+	public static <T>T execute(HttpServletRequest request, Class<T> className) throws Exception {
 		//의존성 확인 및 조힙
 		Method[] methods = className.getMethods(); // 파라미터를 담을 클래스의 메서드들을 뜯어서 Method객체로 만든다.
 		
 		//인스턴스 생성
-		Object obj = className.newInstance(); // 파라미터 타입이 어떤 타입이든지 모두 담을수 있는 새로운 인스턴스를 만든다.
+		T obj = className.newInstance(); // 파라미터 타입이 어떤 타입이든지 모두 담을수 있는 새로운 인스턴스를 만든다.
 		
 		//setter 확인
 		for(Method method : methods) {
