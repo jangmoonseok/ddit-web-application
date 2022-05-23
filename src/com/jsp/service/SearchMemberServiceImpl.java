@@ -17,9 +17,19 @@ import com.jsp.dto.MemberVO;
 import com.jsp.exception.NotMatchSearchCriteria;
 
 public class SearchMemberServiceImpl extends MemberServiceImpl {
-	private SqlSessionFactory sqlSessionFactory = new OracleMybatisSqlSessionFactory();
-	private SearchMemberDAO memberDAO = new SearchMemberDAOImpl();
-	
+	private SqlSessionFactory sqlSessionFactory;// = new OracleMybatisSqlSessionFactory();
+	private SearchMemberDAO memberDAO;// = new SearchMemberDAOImpl();
+
+	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+		this.sqlSessionFactory = sqlSessionFactory;
+	}
+
+	public void setMemberDAO(SearchMemberDAO memberDAO) {
+		this.memberDAO = memberDAO;
+	}
+
+
+
 	public Map<String, Object> getMemberListForPage(Criteria cri) throws Exception {
 		
 		if(cri instanceof SearchCriteria) {

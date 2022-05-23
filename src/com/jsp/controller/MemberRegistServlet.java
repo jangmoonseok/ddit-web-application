@@ -18,8 +18,9 @@ import com.jsp.service.SearchMemberServiceImpl;
 @WebServlet("/member/regist")
 public class MemberRegistServlet extends HttpServlet {
        
-	private MemberService memberService = new SearchMemberServiceImpl();
+	private MemberService memberService;// = new SearchMemberServiceImpl();
 	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url  = "/member/regist";
 		
@@ -32,8 +33,10 @@ public class MemberRegistServlet extends HttpServlet {
 		//화면
 		String url = "/member/regist_success";
 		
+		//입력
 		try {
-			//입력
+			request.setCharacterEncoding("utf-8");
+			
 			MemberRegistCommand command = 
 					HttpRequestParameterAdapter.execute(request, MemberRegistCommand.class);
 			MemberVO member = command.toMemberVO();
