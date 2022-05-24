@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-	<bean id="sqlSessionFactory" class="com.jsp.datasource.OracleMybatisSqlSessionFactory"/>
-	<bean id="memberDAO" class="com.jsp.dao.SearchMemberDAOImpl"/>
-	<bean id="memberService" class="com.jsp.service.SearchMemberServiceImpl">
-		<property name="sqlSessionFactory" ref-value="sqlSessionFactory"/>
-		<property name="memberDAO" ref-value="memberDAO"/>
+
+	<!-- datasource -->
+	<bean id="sqlSessionFactory"
+		  class="com.jsp.datasource.OracleMybatisSqlSessionFactory" />
+
+	<!-- Repository -->
+	<bean id="memberDAO"
+	      class="com.jsp.dao.MemberDAOImpl" />
+	<bean id="searchMemberDAO"
+	      class="com.jsp.dao.SearchMemberDAOImpl" />
+	
+	<!-- Service -->
+	<bean id="memberService"
+	      class="com.jsp.service.MemberServiceImpl" >
+		<property name="sqlSessionFactory"  ref-value="sqlSessionFactory"/>
+		<property name="memberDAO"  ref-value="memberDAO"/>     
 	</bean>
+	
+	      
+	<bean id="searchMemberService"
+	      class="com.jsp.service.SearchMemberServiceImpl" >
+		<property name="sqlSessionFactory"  ref-value="sqlSessionFactory"/>
+		<property name="memberDAO"  ref-value="searchMemberDAO"/>     
+	</bean>
+	      
+
 </beans>

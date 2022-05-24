@@ -8,7 +8,6 @@ import java.net.URLEncoder;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +25,7 @@ public class FileDownloadResolver {
 		ServletContext context = request.getServletContext();
 		String mimeType = context.getMimeType(filePath);
 		if(mimeType == null) {
-			mimeType = "application/octet-stream";
+			mimeType = "application/octet-stream"; // 이미지가 아닌 모든 이진데이터의 MIMETYPE
 		}
 		
 		//response 수정
@@ -47,7 +46,9 @@ public class FileDownloadResolver {
 			sendFileName = new String(sendFileName.getBytes("utf-8"), "ISO-8859-1");
 		}
 		
-		String headerValue = String.format("attachment; filename=\"%s\"", sendFileName);
+		
+		//attachment => file다운로드
+		String headerValue = String.format("attachment; filename=\"%s\"", sendFileName); 
 		response.setHeader(headerKey, headerValue);
 		
 		//파일 내보내기
