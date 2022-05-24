@@ -39,16 +39,18 @@ public class HandlerMapper {
 				Method[] methods = actionClass.getMethods();
 				for(Method method : methods) {
 					if(method.getName().indexOf("set") == 0) {
-						String paramType = method.getParameterTypes()[0].getName();
-						paramType = paramType.substring(paramType.lastIndexOf(".") + 1);
+						String paramName = method.getName().substring(3);
+						paramName = paramName.substring(0,1).toLowerCase() + paramName.substring(1);
 						
-						paramType = (paramType.charAt(0) + "").toLowerCase() + paramType.substring(1);
+						method.invoke(commandAction, ApplicationContext.getApplicationContext().get(paramName));
 						
-						method.invoke(commandAction, ApplicationContext.getApplicationContext().get(paramType));
-						
-						System.out.println("[HandlerMapper:invoke]" + ApplicationContext.getApplicationContext().get(paramType));
+						System.out.println("[HandlerMapper:invoke]" + actionClassName + ":"
+								+ ApplicationContext.getApplicationContext().get(paramName));
 					}
 				}
+				
+				commandMap.put(command, commandAction);
+				System.out.println("[HandlerMapper]" + command + ":" + commandAction + "가 준비되었습니다.");
 			}catch(ClassNotFoundException e) {
 				System.out.println("[HandlerMapper]" + actionClassName + "이 존재하지 않습니다.");
 				throw e;

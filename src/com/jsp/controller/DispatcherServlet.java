@@ -61,19 +61,20 @@ public class DispatcherServlet extends HttpServlet {
 					view = action.process(request, response);
 					
 					if(view == null) {
-						
+						return;
 					}
 					
 					request.setAttribute("viewName", view);
 					InternalViewResolver.view(request, response);
 				} catch (Exception e) {
 					e.printStackTrace();
+					response.sendError(response.SC_INTERNAL_SERVER_ERROR);
 				}
 			}else {
-				
+				response.sendError(response.SC_NOT_FOUND);
 			}
 		}else {
-			
+			response.sendError(response.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
 }

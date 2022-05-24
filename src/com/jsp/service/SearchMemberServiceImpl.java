@@ -21,10 +21,12 @@ public class SearchMemberServiceImpl extends MemberServiceImpl {
 	private SearchMemberDAO memberDAO;// = new SearchMemberDAOImpl();
 
 	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+		super.setSqlSessionFactory(sqlSessionFactory);
 		this.sqlSessionFactory = sqlSessionFactory;
 	}
 
 	public void setMemberDAO(SearchMemberDAO memberDAO) {
+		super.setMemberDAO(memberDAO);
 		this.memberDAO = memberDAO;
 	}
 

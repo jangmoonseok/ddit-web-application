@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jsp.action.Action;
 import com.jsp.command.Criteria;
+import com.jsp.command.SearchCriteria;
 import com.jsp.service.MemberService;
 
 public class MemberListAction implements Action {
@@ -23,7 +24,13 @@ public class MemberListAction implements Action {
 		
 		String pageParam = request.getParameter("page");
 		String perPageNumParam = request.getParameter("perPageNum");
-		Criteria cri = new Criteria();
+		String keyword = request.getParameter("keyword");
+		String searchType = request.getParameter("searchType");
+
+		SearchCriteria cri = new SearchCriteria();
+		cri.setKeyword(keyword);
+		cri.setSearchType(searchType);
+		
 		
 		boolean criFlag = true;
 		

@@ -59,7 +59,7 @@
    	<section class="content">
    		<div class="card">
    			<div class="card-header with-border">
-   				<button type="button" class="btn btn-primary" onclick="OpenWindow('regist', '회원등록', 800,800)" >회원등록</button>
+   				<button type="button" class="btn btn-primary" onclick="OpenWindow('registForm.do', '회원등록', 800,800)" >회원등록</button>
    				<div id="keyword" class="card-tools" style="width:550px;">
    					 <div class="input-group row">
    					 	<!-- search bar -->
@@ -108,8 +108,10 @@
 		               	</tr>
 		               	<c:if test="${!empty memberList }">
 			               	<c:forEach items="${memberList }" var="member">
-			               		<tr onclick="OpenWindow('detail?id=${member.id}', '회원상세', '700', '800')" style="cursor:pointer;">
-				     				<td>사진</td>
+			               		<tr onclick="OpenWindow('detail.do?id=${member.id}', '회원상세', '700', '800')" style="cursor:pointer;">
+				     				<td>
+				     					<span class="manPicture" data-id="${member.id }" style="display:block;width:40px;height:40px;margin:0 auto;"></span>
+				     				</td>
 				     				<td>${member.id }</td>
 				     				<td>${member.pwd }</td>
 				     				<td>${member.name }</td>
@@ -178,7 +180,7 @@
   <script>
 	  function list_go(page,url){
 			//alert(page);
-			if(!url) url="list";
+			if(!url) url="list.do";
 			
 			var jobForm=$('#jobForm');
 			jobForm.find("[name='page']").val(page);
@@ -193,7 +195,12 @@
 			}).submit();		
 	 }
 	 
-	  
+  </script>
+  
+  <script>
+  	window.onload = function(){
+		MemberPictureThumb("<%= request.getContextPath()%>");
+	}
   </script>
  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
