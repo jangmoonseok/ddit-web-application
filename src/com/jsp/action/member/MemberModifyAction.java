@@ -40,34 +40,36 @@ public class MemberModifyAction implements Action {
 			// request 파싱
 			MultipartHttpServletRequestParser multi = new MultipartHttpServletRequestParser(request, MEMORY_THRESHOLD, MAX_FILE_SIZE, MAX_REQUEST_SIZE);
 			
+			// 수정된 정보를 담은 VO
+			MemberVO modifyedMember = MultiParameterAdapter.execute(multi, MemberVO.class);
 			
-			MemberVO member = MultiParameterAdapter.execute(multi, MemberVO.class);
-			if(!multi.getParameter("oldPicture").equals("")) {				
+			// 기존 회원정보가 담긴 VO
+			String id = multi.getParameter("id");
+			MemberVO member = searchMemberService.getMember(id);
+			String oldPicture = member.getPicture();
+			
+			if(!multi.getParameter("uploadPicture").equals("")) {				
 				// 이미지 변경 시 기존 파일 삭제하고 업로드
 				String uploadPath = GetUploadPath.getUploadPath("member.picture.upload"); // 저장 할 경로
 				FileItem[] items = multi.getFileItems("picture");
 				List<File> uploadFiles = FileUploadResolver.fileUpload(items, uploadPath);
 				String uploadFileName = uploadFiles.get(0).getName();
 				
-				String oldPicture = multi.getParameter("oldPicture");
 				if(oldPicture != null) {
 					File oldFile = new File(uploadPath + File.separator + oldPicture);
 					if(oldFile.exists()) {
 						oldFile.delete();
 					}
 				}
-				member.setPicture(uploadFileName);
+				modifyedMember.setPicture(uploadFileName);
 			}else {				
-				String id = multi.getParameter("id");
-				MemberVO member2 = searchMemberService.getMember(id);
-				String picture = member2.getPicture();
-				member.setPicture(picture);
+				modifyedMember.setPicture(oldPicture);
 			}
 			
 			//수정된 회원 정보 저장
 			request.setAttribute("id", multi.getParameter("id"));
 			
-			searchMemberService.modify(member);
+			searchMemberService.modify(modifyedMember);
 		}catch(Exception e){
 			e.printStackTrace();
 			url = "/member/modify_fail";

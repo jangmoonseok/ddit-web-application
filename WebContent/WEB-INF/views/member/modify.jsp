@@ -114,7 +114,8 @@
   	window.onload = function(){
 		MemberPictureThumb("<%= request.getContextPath()%>");
 	}
-  	
+ </script>
+ <script> 
   	function modify_go(){
   		
   		if(!$('input[name="pwd"]').val()){
@@ -130,8 +131,9 @@
   		var form = $('form[role="form"]');
   		form.submit();
   	}
+ </script>
   	
-  	
+  <script>
   	function changePicture_go(){
 	   var form = $('form[role="form"]');
   	   var picture = form.find('[name=picture]')[0];
@@ -151,8 +153,6 @@
   	      return;
   	   };
   	   
-  	   //변경하기 전 이미지
-  	   $('input[name="oldPicture"]').val(document.getElementById('inputFileName').value)
   		   
   	   //업로드 확인변수 초기화(사진변경)
   	   document.getElementById('inputFileName').value = picture.files[0].name;
