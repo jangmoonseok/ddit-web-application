@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsp.action.Action;
+import com.jsp.controller.MakeFileName;
 import com.jsp.dto.MemberVO;
 import com.jsp.service.MemberService;
 
@@ -24,6 +25,8 @@ public class MemberModifyFormAction implements Action {
 		try {
 			MemberVO member = searchMemberService.getMember(id);
 			
+			String originalFileName = MakeFileName.parseFileNameFromUUID(member.getPicture(), "\\$\\$");
+			member.setPicture(originalFileName);
 			request.setAttribute("member", member);
 		} catch (Exception e) {
 			e.printStackTrace();
