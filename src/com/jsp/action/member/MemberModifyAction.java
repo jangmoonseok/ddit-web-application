@@ -36,34 +36,37 @@ public class MemberModifyAction implements Action {
 	public String process(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//화면
 		String url = "/member/modify_success";
-		
 		try {			
 			// request 파싱
 			MultipartHttpServletRequestParser multi = new MultipartHttpServletRequestParser(request, MEMORY_THRESHOLD, MAX_FILE_SIZE, MAX_REQUEST_SIZE);
 			
-			// 파일 업로드
-			String uploadPath = GetUploadPath.getUploadPath("member.picture.upload"); // 저장 할 경로
-			FileItem[] items = multi.getFileItems("picture");
-			List<File> uploadFiles = FileUploadResolver.fileUpload(items, uploadPath);
-			String uploadFileName = uploadFiles.get(0).getName();
 			
-			// 이미지 변경 시 기존 파일 삭제
-			String oldPicture = multi.getParameter("oldPicture");
-			if(oldPicture != null) {
-				File oldFile = new File(uploadPath + File.separator + oldPicture);
-				if(oldFile.exists()) {
-					oldFile.delete();
+			MemberVO member = MultiParameterAdapter.execute(multi, MemberVO.class);
+			if(!multi.getParameter("oldPicture").equals("")) {				
+				// 이미지 변경 시 기존 파일 삭제하고 업로드
+				String uploadPath = GetUploadPath.getUploadPath("member.picture.upload"); // 저장 할 경로
+				FileItem[] items = multi.getFileItems("picture");
+				List<File> uploadFiles = FileUploadResolver.fileUpload(items, uploadPath);
+				String uploadFileName = uploadFiles.get(0).getName();
+				
+				String oldPicture = multi.getParameter("oldPicture");
+				if(oldPicture != null) {
+					File oldFile = new File(uploadPath + File.separator + oldPicture);
+					if(oldFile.exists()) {
+						oldFile.delete();
+					}
 				}
+				member.setPicture(uploadFileName);
+			}else {				
+				String id = multi.getParameter("id");
+				MemberVO member2 = searchMemberService.getMember(id);
+				String picture = member2.getPicture();
+				member.setPicture(picture);
 			}
 			
+			//수정된 회원 정보 저장
 			request.setAttribute("id", multi.getParameter("id"));
 			
-			//수정된 회원 정보 저장
-			MemberModifyCommand command = MultiParameterAdapter.execute(multi, MemberModifyCommand.class);
-			MemberVO member = command.toMemberVO();
-			member.setPicture(uploadFileName);
-
-			System.out.println(member);
 			searchMemberService.modify(member);
 		}catch(Exception e){
 			e.printStackTrace();
