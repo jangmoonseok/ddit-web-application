@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 
@@ -67,9 +68,20 @@ public class MemberModifyAction implements Action {
 			}
 			
 			//수정된 회원 정보 저장
-			request.setAttribute("id", multi.getParameter("id"));
+			request.setAttribute("member", modifyedMember);
 			
 			searchMemberService.modify(modifyedMember);
+			
+			// 로그인 사용자 확인
+			request.setAttribute("parentReload",false);
+
+			HttpSession session = request.getSession();
+			MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+			if (loginUser!=null && member.getId().equals(loginUser.getId())) {
+				request.setAttribute("parentReload",true);
+				session.setAttribute("loginUser", searchMemberService.getMember(member.getId()));
+			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			url = "/member/modify_fail";

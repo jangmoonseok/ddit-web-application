@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.jsp.action.Action;
 import com.jsp.controller.GetUploadPath;
@@ -40,6 +41,16 @@ public class MemberRemoveAction implements Action {
 			
 			//DB에서 회원정보 삭제
 			searchMemberService.remove(id);
+			
+			//loginUser 확인
+			HttpSession session = request.getSession();
+			MemberVO loginUser = (MemberVO)session.getAttribute("loginUser");
+			
+			if(loginUser != null && member.getId().equals(loginUser.getId())) {
+				session.invalidate();
+			}
+			
+			request.setAttribute("member", member);
 		}catch(Exception e) {
 			e.printStackTrace();
 			url = "member/remove_fail";
