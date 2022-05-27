@@ -52,7 +52,15 @@ public class LoginUserCheckFilter implements Filter {
 		
 		//login 확인
 		if(loginUser == null) {
-			httpReq.setAttribute("viewName", "redirect:/common/loginForm");
+			String contextPath = httpReq.getContextPath();
+			String retUrl = httpReq.getRequestURI().replace(contextPath, "");
+			String mCode = httpReq.getParameter("mCode");
+			
+			if(mCode != null) {
+				retUrl += "?mCode=" + mCode;
+			}
+			
+			httpReq.setAttribute("viewName", "redirect:/common/loginForm.do?retUrl=" + retUrl);
 			InternalViewResolver.view(httpReq, httpRes);
 		}else {			
 			chain.doFilter(request, response);

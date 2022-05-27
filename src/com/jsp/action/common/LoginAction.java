@@ -26,6 +26,11 @@ public class LoginAction implements Action{
 		//입력
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("pwd");
+		String retUrl = request.getParameter("retUrl");
+		
+		if(retUrl != null) {
+			url = "redirect:" + retUrl;
+		}
 		
 		try {
 			memberService.login(id, pwd);
