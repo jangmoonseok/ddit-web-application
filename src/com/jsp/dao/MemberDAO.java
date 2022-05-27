@@ -18,13 +18,13 @@ public interface MemberDAO {
 	// 일반 리스트 전체 개수
 	int selectMemberListCount(SqlSession session) throws Exception;
 	// 회원검색
-	MemberVO selectMemberById(SqlSession session, String id) throws Exception;
+	MemberVO selectMemberById(SqlSession session, String id) throws SQLException;
 	// 회원추가
-	void insertMember(SqlSession session, MemberVO memberVO) throws Exception;
+	void insertMember(SqlSession session, MemberVO memberVO) throws SQLException;
 	// 회원정보수정
-	void updateMember(SqlSession session, MemberVO memberVO) throws Exception;
+	void updateMember(SqlSession session, MemberVO memberVO) throws SQLException;
 	// 회원삭제
-	void deleteMember(SqlSession session, String id) throws Exception;
+	void deleteMember(SqlSession session, String id) throws SQLException;
 	// 회원상태수정
 	void enabledMember(SqlSession session, String id, int enable) throws Exception;
 }

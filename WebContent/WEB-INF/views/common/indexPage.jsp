@@ -239,7 +239,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	});
 </script>  
 
-<script  type="text/x-handlebars-template"  id="subMenu-list-template">
+<script type="text/x-handlebars-template" id="subMenu-list-template">
 	{{#each .}}
 		<li class="nav-item subMenu" >
     		<a href="javascript:goPage('<%=request.getContextPath()%>{{murl }}','{{mcode }}');" class="nav-link">
@@ -259,7 +259,7 @@ window.onload = function(){
 
 <script>
 function goPage(url, mCode){
-	//alert(url);
+	
 	$('iframe[name="ifr"]').attr("src",url);
 	
 	//HTML5 지원브라우저에서 사용 가능
