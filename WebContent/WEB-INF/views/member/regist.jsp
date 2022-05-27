@@ -3,7 +3,6 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 
 
-<%@ include file="/WEB-INF/include/header.jsp" %>
 <div>
   	 <section class="content-header">
 	  	<div class="container-fluid">
@@ -289,4 +288,3 @@ function regist_go(){
 	form.submit();
 }
 </script>
-<%@ include file="/WEB-INF/include/footer.jsp"%>

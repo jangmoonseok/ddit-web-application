@@ -13,7 +13,6 @@
 <c:set var="cri" value="${pageMaker.cri }"/>
 <c:set var="startPage" value="${pageMaker.startPage }"/>
 <c:set var="endPage" value="${pageMaker.endPage }"/>
-<%@ include file="/WEB-INF/include/header.jsp" %>
 <div class="wrapper">
   <div >
 	 <!-- Main content -->
@@ -186,4 +185,3 @@
 		MemberPictureThumb("<%= request.getContextPath()%>");
 	}
   </script>
-<%@ include file="/WEB-INF/include/footer.jsp"%>

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/include/header.jsp" %>
 <div class="wrapper">
   <div>
    <section class="content-header">
@@ -175,5 +174,4 @@
   	   }
   	}
   </script>
-<%@ include file="/WEB-INF/include/footer.jsp" %>
  
