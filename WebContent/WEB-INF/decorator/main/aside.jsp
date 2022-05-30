@@ -12,15 +12,15 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="" class="img-circle elevation-2" alt="User Image">
+          <img src="<%= request.getContextPath()%>/member/getPicture.do?id=${loginUser.id}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
              <div class="row">
-		          <a href=""class="d-block" >loginUser Name</a>&nbsp;&nbsp;
-		          <button onclick="" class="btn btn-xs btn-primary col-xs-3 " type="button" >LOGOUT</button>
+		          <a href="javascript:OpenWindow('<%= request.getContextPath() %>/member/detail.do?id=${loginUser.id }', '내정보', '700', '800')" class="d-block" >${loginUser.name }</a>&nbsp;&nbsp;
+		          <button onclick="location.href='<%= request.getContextPath() %>/common/logout.do';" class="btn btn-xs btn-primary col-xs-3 " type="button" >LOGOUT</button>
 	         </div>
-	         <a href="tel:">tel : phone </a><br/>
-           	<a href="">email : email</a>
+	         <a href="tel:${loginUser.phone }">tel : ${loginUser.phone } </a><br/>
+           	<a href="mailto:${loginUser.email }">email : ${loginUser.email }</a>
         </div>
       </div>
 
