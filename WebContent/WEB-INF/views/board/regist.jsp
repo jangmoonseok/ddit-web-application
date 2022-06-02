@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-    
+<%@ page trimDirectiveWhitespaces="true" %>
+   
 <head>
 	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/plugins/summernote/summernote-bs4.min.css">
 </head>
 
-<title>글 등록</title>
+<title>게시글 등록</title>
 
 <body>
- <!-- Main content -->
+	 <!-- Main content -->
 	<section class="content-header">
 	  	<div class="container-fluid">
 	  		<div class="row md-2">
@@ -60,7 +60,7 @@
 							<div class="form-group">
 								<label for="content">내 용</label>
 								<textarea class="textarea" name="content" id="content" rows="20"
-									cols="90" placeholder="1000자 내외로 작성하세요." ></textarea>
+									placeholder="1000자 내외로 작성하세요." style="display: none;"></textarea>
 							</div>
 						</form>
 					</div><!--end card-body  -->
@@ -73,28 +73,30 @@
     </section>
     <!-- /.content -->
     
+    
 <script>
-	window.onload = function(){
-		summernote_go($('textarea[name="content"]'), '<%=request.getContextPath()%>');
+window.onload=function(){
+	summernote_go($('#content'),'<%=request.getContextPath()%>'); 
+}
+function regist_go(){
+	var form = document.registForm;
+	if(form.title.value==""){
+		alert("제목은 필수입니다.");
+		return;
 	}
+	
+	form.submit();
+}
 </script>
 
-<script>
-	function regist_go(){
-		var form = document.registForm;
-		
-		if(form.title.value==""){
-			alert("제목은 필수입니다.");
-			return;
-		}
-		
-		if(form.content.value==""){
-			alert("내용은 필수입니다.");
-			return;
-		}
-		
-		form.submit();
-	}
-</script>  
 </body>
-       
+
+
+
+
+
+
+
+
+
+

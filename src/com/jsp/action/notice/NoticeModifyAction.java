@@ -24,7 +24,7 @@ public class NoticeModifyAction implements Action{
 		NoticeModifyCommand noticeReq = XSSHttpRequestParameterAdapter.execute(request, NoticeModifyCommand.class, true);
 		
 		NoticeVO notice = noticeReq.toNoticeVO();
-		notice.setContent((String)request.getParameter("content"));
+		notice.setContent(request.getParameter("content"));
 		
 		noticeService.modify(notice);
 		

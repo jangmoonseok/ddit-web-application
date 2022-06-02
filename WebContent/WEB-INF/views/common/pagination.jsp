@@ -10,7 +10,7 @@
 			</a>
 		</li>
 		<li class="page-item">
-			<a class="page-link" href="">
+			<a class="page-link" href="javascript:list_go(${param.page - 1 lt 0 ? 1 : param.page - 1})">
 				<i class="fas fa-angle-left"></i>
 			</a>						
 		</li>
@@ -22,12 +22,12 @@
 			</li>
 		</c:forEach>
 		<li class="page-item">
-			<a class="page-link" href="">
+			<a class="page-link" href="javascript:list_go(${param.page + 1})">
 				<i class="fas fa-angle-right"></i>
 			</a>						
 		</li>
 		<li class="page-item">
-			<a class="page-link" href="">
+			<a class="page-link" href="javascript:list_go(${pageMaker.realEndPage })">
 				<i class="fas fa-angle-double-right"></i>
 			</a>						
 		</li>
