@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <title>게시글 상세</title>
 
 <body>
@@ -144,6 +143,7 @@
 <form role="form">
 	<input type="hidden" name="bno" value="${board.bno }" />
 </form>
+
 
 <script>
 

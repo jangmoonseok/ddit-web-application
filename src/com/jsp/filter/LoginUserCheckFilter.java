@@ -60,7 +60,7 @@ public class LoginUserCheckFilter implements Filter {
 				retUrl += "?" + queryString;
 			}
 			
-			httpReq.setAttribute("viewName", "redirect:/common/loginForm.do?retUrl=" + retUrl);
+			httpReq.setAttribute("viewName", "redirect:/common/loginForm.do?error=-1&retUrl=" + retUrl);
 			InternalViewResolver.view(httpReq, httpRes);
 		}else {			
 			chain.doFilter(request, response);

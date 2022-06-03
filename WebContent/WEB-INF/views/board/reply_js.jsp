@@ -136,8 +136,8 @@ function replyRegist_go(){
 			getPage("<%=request.getContextPath()%>/reply/list.do?bno=${board.bno}&page=" + replyPage);
 			$('#newReplyText').val("");
 		},
-		error:function(){
-			alert("댓글 등록이 실패됐습니다.");
+		error:function(error){
+			AjaxErrorSecurityRedirectHandler(error.status);
 		}
 	});
 }
@@ -168,8 +168,28 @@ function replyModify_go(){
 			alert("수정되었습니다.");
 			getPage("<%=request.getContextPath()%>/reply/list.do?bno=${board.bno}&page=" + replyPage);
 		},
-		error:function(){
-			alert("수정을 실패했습니다.");
+		error:function(error){
+			AjaxErrorSecurityRedirectHandler(error.status);
+		},
+		complete:function(){
+			$('#modifyModal').modal('hide');
+		}
+	});
+}
+
+function replyRemove_go(){
+	var rno = $('.modal-title').text();
+	
+	$.ajax({
+		url : "<%=request.getContextPath()%>/reply/remove.do?rno="+ rno + "&page=" + replyPage + "&bno=${board.bno}",
+		type:'get',
+		success:function(page){
+			alert("삭제되었습니다.");
+			getPage("<%=request.getContextPath()%>/reply/list.do?bno=${board.bno}&page=" + page);
+			replyPage = page;
+		},
+		error:function(error){
+			AjaxErrorSecurityRedirectHandler(error.status);
 		},
 		complete:function(){
 			$('#modifyModal').modal('hide');
