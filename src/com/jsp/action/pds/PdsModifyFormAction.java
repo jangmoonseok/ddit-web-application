@@ -17,7 +17,7 @@ public class PdsModifyFormAction implements Action {
 
 	public PdsService pdsService;
 
-	public void setPdsServie(PdsService pdsService) {
+	public void setPdsService(PdsService pdsService) {
 		this.pdsService = pdsService;
 
 	}
@@ -31,7 +31,7 @@ public class PdsModifyFormAction implements Action {
 			int pno = Integer.parseInt(request.getParameter("pno"));
 
 			PdsVO pds = pdsService.getPds(pno);			
-			
+		
 			List<AttachVO> renamedAttachList=
 					MakeFileName.parseFileNameFromAttaches(pds.getAttachList(), "\\$\\$");
 			pds.setAttachList(renamedAttachList);
